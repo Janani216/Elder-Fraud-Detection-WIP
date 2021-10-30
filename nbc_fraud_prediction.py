@@ -83,7 +83,7 @@ def NBC(x_train,y_train,x_test,y_test):
   x_pred = model.predict(x_train)
   test_acc =  metrics.accuracy_score(y_train, x_pred)
 
-  return modelf, train_acc, test_acc
+  return modelf, round(train_acc,2), round(test_acc,2)
 
 NBC(x_train,y_train,x_test,y_test)
 
