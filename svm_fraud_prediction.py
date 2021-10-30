@@ -81,6 +81,6 @@ def SVM(x_train,y_train,x_test,y_test):
   test_acc = metrics.accuracy_score(y_train, x_pred)
   model = classifier.get_params()
   
-  return model,train_acc,test_acc
+  return model,round(train_acc,2),round(test_acc,2)
 
 SVM(x_train,y_train,x_test,y_test)
