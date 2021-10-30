@@ -1,8 +1,9 @@
-
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
 
 df = pd.read_csv('traindataset.csv')
 
@@ -73,24 +74,15 @@ y_train = Y.iloc[0:int(dataset.shape[0]*0.80)]
 x_test = X.iloc[int(dataset.shape[0]*0.80): int(dataset.shape[0])]
 y_test = Y.iloc[int(dataset.shape[0]*0.80): int(dataset.shape[0])]
 
-def training():
-  from sklearn.linear_model import LogisticRegression
+def LR(x_train,y_train,x_test,y_test): 
   logisticRegr = LogisticRegression()
   logisticRegr.fit(x_train, y_train)
-
-#Testing Accuracy
-def testing_accuracy():
-  from sklearn import metrics
   y_pred = logisticRegr.predict(x_test)
-  return metrics.accuracy_score(y_test, y_pred)
-
-#Training Accuracy
-def training_accuracy():
-  from sklearn import metrics
+  train_acc =  metrics.accuracy_score(y_test, y_pred)
   x_pred = logisticRegr.predict(x_train)
-  return metrics.accuracy_score(y_train, x_pred)
+  test_acc = metrics.accuracy_score(y_train, x_pred)
+  model = logisticRegr.get_params
 
-training()
-training_accuracy()
-testing_accuracy()
+  return model, train_acc , test_acc
 
+LR(x_train,y_train,x_test,y_test)
