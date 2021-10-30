@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
@@ -73,25 +72,15 @@ y_train = Y.iloc[0:int(dataset.shape[0]*0.80)]
 x_test = X.iloc[int(dataset.shape[0]*0.80): int(dataset.shape[0])]
 y_test = Y.iloc[int(dataset.shape[0]*0.80): int(dataset.shape[0])]
 
-#Training
-def training():
-  from sklearn import svm
+def SVM(x_train,y_train,x_test,y_test):
   classifier = svm.SVC(kernel='sigmoid') 
   classifier.fit(x_train,y_train)
-
-#Testing Accuracy
-def testing_accuracy():
-  from sklearn import metrics
   y_pred = classifier.predict(x_test)
-  return metrics.accuracy_score(y_test, y_pred)
-
-#Training Accuracy
-def training_accuracy():
-  from sklearn import metrics
+  train_acc = metrics.accuracy_score(y_test, y_pred)
   x_pred = classifier.predict(x_train)
-  return metrics.accuracy_score(y_train, x_pred)
+  test_acc = metrics.accuracy_score(y_train, x_pred)
+  model = classifier.get_params()
+  
+  return model,train_acc,test_acc
 
-training()
-training_accuracy()
-testing_accuracy()
-
+SVM(x_train,y_train,x_test,y_test)
