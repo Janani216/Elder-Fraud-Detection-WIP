@@ -1,8 +1,9 @@
-
 import pandas as pd
 import numpy as np
 from sklearn import preprocessing
 from sklearn.preprocessing import OneHotEncoder
+from sklearn import metrics
+from sklearn.naive_bayes import GaussianNB
 
 df = pd.read_csv('traindataset.csv')
 
@@ -73,27 +74,16 @@ y_train = Y.iloc[0:int(dataset.shape[0]*0.80)]
 x_test = X.iloc[int(dataset.shape[0]*0.80): int(dataset.shape[0])]
 y_test = Y.iloc[int(dataset.shape[0]*0.80): int(dataset.shape[0])]
 
-def training():
-  #Gaussian
-  from sklearn.naive_bayes import GaussianNB
-  global model 
+def NBC(x_train,y_train,x_test,y_test):
   model = GaussianNB()
   model.fit(x_train, y_train)
-  return model
-
-def testing_accuracy():
-  #Testing Accuracy
-  from sklearn import metrics
+  modelf = model.get_params()
   y_pred = model.predict(x_test)
-  return metrics.accuracy_score(y_test, y_pred)
-
-def training_accuracy():
-  #Training Accuracy
-  from sklearn import metrics
+  train_acc = metrics.accuracy_score(y_test, y_pred)
   x_pred = model.predict(x_train)
-  return metrics.accuracy_score(y_train, x_pred)
+  test_acc =  metrics.accuracy_score(y_train, x_pred)
 
-training()
-training_accuracy()
-testing_accuracy()
+  return modelf, train_acc, test_acc
+
+NBC(x_train,y_train,x_test,y_test)
 
